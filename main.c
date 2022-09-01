@@ -23,7 +23,7 @@ int main()
     system ("cls");
 
     //int r = rand() % 1; //picks random number between 0 and 1
-    //printf("il giocatore che inizia la partita è pescato in modo casuale.\n -------GAME START-------\n");
+    //printf("il giocatore che inizia la partita Ã¨ pescato in modo casuale.\n -------GAME START-------\n");
 
 
     if(vita_p1==0 || mana_p1==0){
@@ -57,6 +57,8 @@ int main()
                 printf("error"); //aggiungere un loop per riprovare ad inserire l'attacco
         }
     }
+    
+    system("cls");
 
     if(vita_p2==0 || mana_p2==0){
         printf("%s died, winner is %s", p2, p1);
@@ -89,6 +91,8 @@ int main()
                 printf("error"); //aggiungere un loop per riprovare ad inserire l'attacco
         }
     }
+    
+    system("cls");
     //loop per ricominciare il turno
     //chi inizia? dai l'opzione
 
