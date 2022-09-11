@@ -2,6 +2,24 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define ATK_SHIELD_CONST 20
+#define CURE_CONST 50
+
+void game_over(int a, int b, char c[],char d[]){
+
+    if(a<=0 ||b<=0){
+        system("cls");
+        printf("%se' perito!\n**********************************Congratulazioni!**********************************\nSEI UN MAGO POTENTISSIMO %s ",c,d);
+
+        exit(0);
+
+    }
+
+
+} // checks adversaire's pv&mp before the player's turn
+
+
+
 int main()
 {
     char p1[20], p2[20];
@@ -12,6 +30,7 @@ int main()
     int scelta; int atk;
     bool condizione_game=true;
     bool stupido=true;
+
 
     printf("**********************************WIZARDS BRAWL**********************************\n \n");
 
@@ -24,25 +43,33 @@ int main()
     fgets(p2,20,stdin);  //c stops to store characters when it detect a space, solution fgets
     printf("Benvenuto %s\n",p2);
 
-    srand(time(NULL));
+    srand(time(NULL)); //initialization
     int r = rand() % 2; //picks random number between 0 and 1
-    printf("il giocatore che inizia la partita e' pescato in modo casuale.\n \n");
-    printf("**********************************REGOLE**************************************\n\n");
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~REGOLE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
     printf("Vi sfiderete in uno scontro magico. Entrambi avete 100Pv e 100Mp.\n Il primo che arriva a zero punti vita o finira' il mana avra' perso.\n");
-    printf("Gestite bene le vostre risorse e cercate la migliore strategia. Che vinca il migliore\n\n\n\n");
+    printf("Gestite bene le vostre risorse e cercate la migliore strategia. Che vinca il migliore\n\n");
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+    printf("il giocatore che inizia la partita e' pescato in modo casuale.\n\n\n");
     printf("**********************************GAME START**********************************\n\n");
 
 
     switch(r)
     {
-            case 0:     //primo caso inzia giocatore 1
+            case 0:     //player 1 begins
         while(condizione_game){
 
-            if(vita_p1<=0 || mana_p1<=0){ system ("cls");
-                    printf(" %s e' perito!\n *********************Congratulazioni!*********************\n %s sei un mago potentissimo! ", p1, p2);
+            game_over(vita_p2,mana_p2,p2,p1);
+            if(vita_p1<=0 || mana_p1<=0){//P1
+                    system ("cls");
+                    printf("%se' perito!\n**********************************Congratulazioni!**********************************\nSEI UN MAGO POTENTISSIMO %s ", p1, p2);
                     exit(0);
                 } else {
-                    printf(" %s Tocca a te!\n Fagli vedere di che pasta sei fatto!\n atk:\n 1.Palla di Fuoco\n 2.Scudo impenetrabile\n 3.Fonte del Mago\n", p1);
+                    printf("%sTocca a te!\nFagli vedere di che pasta sei fatto!\n", p1);
+                    printf("|Pv: %d\n|Mp: %d\n\n", vita_p1, mana_p1);
+                    printf("Quale incantesimo vuoi usare?\n");
+                    printf("1. PALLA DI FUOCO\n |attacco magico del fuoco, richiede 20 di mana, fa 20 danni all'avversario|\n");
+                    printf("2. SCUDO IMPENETRABILE\n |ti protegge dall'attacco dell'avversario, richiede 30 mana. Attenzione, dura solo un turno|\n");
+                    printf("3. FONTE DEL MAGO\n |recupera 50 punti vita del giocatore, richiede 40 mana|\n");
 
                     stupido=true;
 
@@ -54,38 +81,45 @@ int main()
                         case 1: //offensive magic
                             atk = 20;
                             mana_p1-= atk;
-                            vita_p2-= 20;
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            vita_p2-= ATK_SHIELD_CONST;
+                            system("cls");
                             stupido=false;
                             break;
 
                         case 2: //defensive magic
                             atk = 30;
                             mana_p1-= atk;
-                            vita_p1+= 20; //shield from one offensive magic
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            vita_p1+= ATK_SHIELD_CONST; //shield from one offensive magic
+                            system("cls");
                             stupido=false;
                             break;
 
                         case 3: //cure
                             atk = 40;
                             mana_p1-= atk;
-                            vita_p1= 100; //restores health
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            vita_p1+= CURE_CONST; //restores health
+                            system("cls");
                             stupido=false;
                             break;
 
                         default:
-                            printf("error\n"); //aggiungere un loop per riprovare ad inserire l'attacco
+                            printf("Errore, valore non accettabile, riprova\n"); //aggiungere un loop per riprovare ad inserire l'attacco
                     }
-                }//loop
+                }//while interno
             }//else
 
-            if(vita_p2<=0 || mana_p2<=0){ system ("cls");
-                    printf(" %s e' perito!\n *********************Congratulazioni!*********************\n %s sei un mago potentissimo! ", p1, p2);
+            game_over(vita_p1,mana_p1,p1,p2);
+            if(vita_p2<=0 || mana_p2<=0){ //P2
+                    system ("cls");
+                    printf("%se' perito!\n**********************************Congratulazioni!**********************************\nSEI UN MAGO POTENTISSIMO %s ", p2, p1);
                     exit(0);
                 } else {
-                      printf(" %s Tocca a te!\n Fagli vedere di che pasta sei fatto!\n atk:\n 1.Lama di ghiaccio\n 2.Clone fantoccio\n 3.Ripresa Istantanea\n", p2);
+                    printf("%sTocca a te!\nFagli vedere di che pasta sei fatto!\n", p2);
+                    printf("|Pv: %d\n|Mp: %d\n\n", vita_p2, mana_p2);
+                    printf("Quale incantesimo vuoi usare?\n");
+                    printf("1. LAMA DI GHIACCIO\n |attacco magico del ghiaccio, richiede 20 di mana, fa 20 danni all'avversario|\n");
+                    printf("2. CLONE FANTOCCIO\n |ti protegge dall'attacco dell'avversario, richiede 30 mana. Attenzione, dura solo un turno|\n");
+                    printf("3. RIPRESA INSTANTANEA\n |recupera 50 punti vita del giocatore, richiede 40 mana|\n");
 
                     stupido=true;
 
@@ -97,41 +131,49 @@ int main()
                         case 1: //offensive magic
                             atk = 20;
                             mana_p2-= atk;
-                            vita_p1-= 20;
-                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            vita_p1-= ATK_SHIELD_CONST;
+                            system("cls"); //clears screen
                             stupido=false;
                             break;
 
                         case 2: //defensive magic
                             atk = 30;
                             mana_p2-= atk;
-                            vita_p2+= 20; //shield from one offensive magic
-                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            vita_p2+= ATK_SHIELD_CONST; //shield from one offensive magic
+                            system("cls");
                             stupido=false;
                             break;
                         case 3: //cure
                             atk = 40;
                             mana_p2-= atk;
-                            vita_p2= 100; //restores health
-                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            vita_p2+= CURE_CONST; //restores health
+                            system("cls");
                             stupido=false;
                             break;
 
                         default:
-                            printf("error");
+                            printf("Errore, valore non accettabile, riprova\n");
                     }
-                } //switch
-            } //else
-        }//CASO 0
+                } //while interno
+            }//else
+        }//while ripetizione turni
+        break; //CASO 0
 
-            case 1:   //secondo caso inizia giocatore 2
+            case 1:   //player 2 begins
         while(condizione_game){
 
-            if(vita_p2<=0 || mana_p2<=0){ system ("cls");
-                    printf(" %s e' perito!\n *********************Congratulazioni!*********************\n %s sei un mago potentissimo!", p1, p2);
+            game_over(vita_p1,mana_p1,p1,p2);
+            if(vita_p2<=0 || mana_p2<=0){ //P2
+                    system ("cls");
+                    printf("%se' perito!\n**********************************Congratulazioni!**********************************\nSEI UN MAGO POTENTISSIMO %s ", p2, p1);
                     exit(0);
                 } else {
-                   printf(" %s Tocca a te!\n Fagli vedere di che pasta sei fatto!\n atk:\n 1.Lama di ghiaccio\n 2.Clone fantoccio\n 3.Ripresa Istantanea\n", p2);
+                    printf("%sTocca a te!\nFagli vedere di che pasta sei fatto!\n", p2);
+                    printf("|Pv: %d\n|Mp: %d\n\n", vita_p2, mana_p2);
+                    printf("Quale incantesimo vuoi usare?\n");
+                    printf("1. LAMA DI GHIACCIO\n |attacco magico del ghiaccio, richiede 20 di mana, fa 20 danni all'avversario|\n");
+                    printf("2. CLONE FANTOCCIO\n |ti protegge dall'attacco dell'avversario, richiede 30 mana. Attenzione, dura solo un turno|\n");
+                    printf("3. RIPRESA INSTANTANEA\n |recupera 50 punti vita del giocatore, richiede 40 mana|\n");
 
                     stupido=true;
 
@@ -143,39 +185,45 @@ int main()
                         case 1: //offensive magic
                             atk = 20;
                             mana_p2-= atk;
-                            vita_p1-= 20;
-                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            vita_p1-= ATK_SHIELD_CONST;
+                            system("cls");
                             stupido=false;
                             break;
 
                         case 2: //defensive magic
                             atk = 30;
                             mana_p2-= atk;
-                            vita_p2+= 20; //shield from one offensive magic
-                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            vita_p2+= ATK_SHIELD_CONST; //shield from one offensive magic
+                            system("cls");
                             stupido=false;
                             break;
 
                         case 3: //cure
                             atk = 40;
                             mana_p2-= atk;
-                            vita_p2= 100; //restores health
-                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            vita_p2+= CURE_CONST; //restores health
+                            system("cls");
                             stupido=false;
                             break;
 
                         default:
-                            printf("error"); //aggiungere un loop per riprovare ad inserire l'attacco
+                            printf("Errore, valore non accettabile, riprova\n");
                     }
                 }//loop
             }//else
 
-
-            if(vita_p1<=0 || mana_p1<=0){ system ("cls");
-                   printf(" %s e' perito!\n *********************Congratulazioni!*********************\n %s sei un mago potentissimo!", p1, p2);
+            game_over(vita_p2,mana_p2,p2,p1);
+            if(vita_p1<=0 || mana_p1<=0){ //P1
+                    system ("cls");
+                    printf("%se' perito!\n**********************************Congratulazioni!**********************************\nSEI UN MAGO POTENTISSIMO %s ", p1, p2);
                     exit(0);
                 } else {
-                   printf(" %s Tocca a te!\n Fagli vedere di che pasta sei fatto!\n atk:\n 1.Palla di Fuoco\n 2.Scudo impenetrabile\n 3.Fonte del Mago\n", p1);
+                    printf("%sTocca a te!\nFagli vedere di che pasta sei fatto!\n", p1);
+                    printf("|Pv: %d\n|Mp: %d\n\n", vita_p1, mana_p1);
+                    printf("Quale incantesimo vuoi usare?\n");
+                    printf("1. PALLA DI FUOCO\n |attacco magico del fuoco, richiede 20 di mana, fa 20 danni all'avversario|\n");
+                    printf("2. SCUDO IMPENETRABILE\n |ti protegge dall'attacco dell'avversario, richiede 30 mana. Attenzione, dura solo un turno|\n");
+                    printf("3. FONTE DEL MAGO\n |recupera 50 punti vita del giocatore, richiede 40 mana|\n");
 
                     stupido=true;
 
@@ -187,34 +235,34 @@ int main()
                         case 1: //offensive magic
                             atk = 20;
                             mana_p1-= atk;
-                            vita_p2-= 20;
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            vita_p2-= ATK_SHIELD_CONST;
+                            system("cls");
                             stupido=false;
                             break;
 
                         case 2: //defensive magic
                             atk = 30;
                             mana_p1-= atk;
-                            vita_p1+= 20; //shield from one offensive magic
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            vita_p1+= ATK_SHIELD_CONST; //shield from one offensive magic
+                            system("cls");
                             stupido=false;
                             break;
                         case 3: //cure
                             atk = 40;
                             mana_p1-= atk;
-                            vita_p1= 100; //restores health
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            vita_p1+= CURE_CONST; //restores health
+                            system("cls");
                             stupido=false;
                             break;
 
                         default:
-                            printf("error"); //aggiungere un loop per riprovare ad inserire l'attacco
+                            printf("Errore, valore non accettabile, riprova\n");
                     }
-                }//loop
+                }//while interno
             }//else
-        }//CASO 1
-
-        }
+        }//while ripetizione turni
+        break; //CASO 1
+        }//switch
 
 
     return 0;
