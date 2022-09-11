@@ -262,7 +262,8 @@ int main()
             }//else
         }//while ripetizione turni
         break; //CASO 1
-        }//switch
+
+        }//switch final case 0 case 1
 
 
     return 0;
