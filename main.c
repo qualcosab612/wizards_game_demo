@@ -11,8 +11,10 @@ int main()
     int mana_p2=100;
     int scelta; int atk;
     bool condizione_game=true;
+    bool stupido=true;
 
-    printf("*****************WIZARDS BRAWL*******************\n \n");
+    printf("**********************************WIZARDS BRAWL**********************************\n \n");
+
 
     printf("Giocatore 1, inserisci il tuo nome:\n");
     fgets(p1,20,stdin);  //c stops to store characters when it detect a space, solution fgets
@@ -22,21 +24,29 @@ int main()
     fgets(p2,20,stdin);  //c stops to store characters when it detect a space, solution fgets
     printf("Benvenuto %s\n",p2);
 
+    srand(time(NULL));
     int r = rand() % 2; //picks random number between 0 and 1
-    printf("il giocatore che inizia la partita è pescato in modo casuale.\n *****************GAME START*******************");
+    printf("il giocatore che inizia la partita e' pescato in modo casuale.\n \n");
+    printf("**********************************REGOLE**************************************\n\n");
+    printf("Vi sfiderete in uno scontro magico. Entrambi avete 100Pv e 100Mp.\n Il primo che arriva a zero punti vita o finira' il mana avra' perso.\n");
+    printf("Gestite bene le vostre risorse e cercate la migliore strategia. Che vinca il migliore\n\n\n\n");
+    printf("**********************************GAME START**********************************\n\n");
 
-    system ("cls"); //pulisce lo schermo
 
     switch(r)
     {
             case 0:     //primo caso inzia giocatore 1
         while(condizione_game){
 
-            if(vita_p1==0 || mana_p1==0){
-                    printf("%s died, winner is %s", p1, p2);
+            if(vita_p1<=0 || mana_p1<=0){ system ("cls");
+                    printf(" %s e' perito!\n *********************Congratulazioni!*********************\n %s sei un mago potentissimo! ", p1, p2);
                     exit(0);
                 } else {
-                    printf("%s turn, what are u using?\n atk:\n 1...\n 2...\n 3...\n", p1);
+                    printf(" %s Tocca a te!\n Fagli vedere di che pasta sei fatto!\n atk:\n 1.Palla di Fuoco\n 2.Scudo impenetrabile\n 3.Fonte del Mago\n", p1);
+
+                    stupido=true;
+
+                    while(stupido){
                     scanf("%d", &scelta);
 
                     switch(scelta)
@@ -46,6 +56,7 @@ int main()
                             mana_p1-= atk;
                             vita_p2-= 20;
                             printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            stupido=false;
                             break;
 
                         case 2: //defensive magic
@@ -53,24 +64,32 @@ int main()
                             mana_p1-= atk;
                             vita_p1+= 20; //shield from one offensive magic
                             printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            stupido=false;
                             break;
+
                         case 3: //cure
                             atk = 40;
                             mana_p1-= atk;
                             vita_p1= 100; //restores health
                             printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            stupido=false;
                             break;
 
                         default:
-                            printf("error"); //aggiungere un loop per riprovare ad inserire l'attacco
+                            printf("error\n"); //aggiungere un loop per riprovare ad inserire l'attacco
                     }
-                }
+                }//loop
+            }//else
 
-            if(vita_p2==0 || mana_p2==0){
-                    printf("%s died, winner is %s", p2, p1);
+            if(vita_p2<=0 || mana_p2<=0){ system ("cls");
+                    printf(" %s e' perito!\n *********************Congratulazioni!*********************\n %s sei un mago potentissimo! ", p1, p2);
                     exit(0);
                 } else {
-                    printf("%s turn, what are u using?\n atk:\n 1...\n 2...\n 3...\n", p2);
+                      printf(" %s Tocca a te!\n Fagli vedere di che pasta sei fatto!\n atk:\n 1.Lama di ghiaccio\n 2.Clone fantoccio\n 3.Ripresa Istantanea\n", p2);
+
+                    stupido=true;
+
+                    while(stupido){
                     scanf("%d", &scelta);
 
                     switch(scelta)
@@ -79,36 +98,44 @@ int main()
                             atk = 20;
                             mana_p2-= atk;
                             vita_p1-= 20;
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            stupido=false;
                             break;
 
                         case 2: //defensive magic
                             atk = 30;
                             mana_p2-= atk;
                             vita_p2+= 20; //shield from one offensive magic
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            stupido=false;
                             break;
                         case 3: //cure
                             atk = 40;
                             mana_p2-= atk;
                             vita_p2= 100; //restores health
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            stupido=false;
                             break;
 
                         default:
-                            printf("error"); //aggiungere un loop per riprovare ad inserire l'attacco
+                            printf("error");
                     }
-                }
-        }
+                } //switch
+            } //else
+        }//CASO 0
 
             case 1:   //secondo caso inizia giocatore 2
         while(condizione_game){
 
-            if(vita_p2==0 || mana_p2==0){
-                    printf("%s died, winner is %s", p2, p1);
+            if(vita_p2<=0 || mana_p2<=0){ system ("cls");
+                    printf(" %s e' perito!\n *********************Congratulazioni!*********************\n %s sei un mago potentissimo!", p1, p2);
                     exit(0);
                 } else {
-                    printf("%s turn, what are u using?\n atk:\n 1...\n 2...\n 3...\n", p2);
+                   printf(" %s Tocca a te!\n Fagli vedere di che pasta sei fatto!\n atk:\n 1.Lama di ghiaccio\n 2.Clone fantoccio\n 3.Ripresa Istantanea\n", p2);
+
+                    stupido=true;
+
+                    while(stupido){
                     scanf("%d", &scelta);
 
                     switch(scelta)
@@ -117,33 +144,42 @@ int main()
                             atk = 20;
                             mana_p2-= atk;
                             vita_p1-= 20;
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            stupido=false;
                             break;
 
                         case 2: //defensive magic
                             atk = 30;
                             mana_p2-= atk;
                             vita_p2+= 20; //shield from one offensive magic
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            stupido=false;
                             break;
+
                         case 3: //cure
                             atk = 40;
                             mana_p2-= atk;
                             vita_p2= 100; //restores health
-                            printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            printf("vita: %d\nmana: %d\n", vita_p2, mana_p2);
+                            stupido=false;
                             break;
 
                         default:
                             printf("error"); //aggiungere un loop per riprovare ad inserire l'attacco
                     }
-                }
+                }//loop
+            }//else
 
 
-            if(vita_p1==0 || mana_p1==0){
-                    printf("%s died, winner is %s", p1, p2);
+            if(vita_p1<=0 || mana_p1<=0){ system ("cls");
+                   printf(" %s e' perito!\n *********************Congratulazioni!*********************\n %s sei un mago potentissimo!", p1, p2);
                     exit(0);
                 } else {
-                    printf("%s turn, what are u using?\n atk:\n 1...\n 2...\n 3...\n", p1);
+                   printf(" %s Tocca a te!\n Fagli vedere di che pasta sei fatto!\n atk:\n 1.Palla di Fuoco\n 2.Scudo impenetrabile\n 3.Fonte del Mago\n", p1);
+
+                    stupido=true;
+
+                    while(stupido){
                     scanf("%d", &scelta);
 
                     switch(scelta)
@@ -153,6 +189,7 @@ int main()
                             mana_p1-= atk;
                             vita_p2-= 20;
                             printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            stupido=false;
                             break;
 
                         case 2: //defensive magic
@@ -160,19 +197,22 @@ int main()
                             mana_p1-= atk;
                             vita_p1+= 20; //shield from one offensive magic
                             printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            stupido=false;
                             break;
                         case 3: //cure
                             atk = 40;
                             mana_p1-= atk;
                             vita_p1= 100; //restores health
                             printf("vita: %d\nmana: %d\n", vita_p1, mana_p1);
+                            stupido=false;
                             break;
 
                         default:
                             printf("error"); //aggiungere un loop per riprovare ad inserire l'attacco
                     }
-                }
-               }
+                }//loop
+            }//else
+        }//CASO 1
 
         }
 
