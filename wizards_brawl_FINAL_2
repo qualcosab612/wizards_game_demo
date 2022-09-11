@@ -46,7 +46,7 @@ int main()
     srand(time(NULL)); //initialization
     int r = rand() % 2; //picks random number between 0 and 1
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~REGOLE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
-    printf("Vi sfiderete in uno scontro magico. Entrambi avete 100Pv e 100Mp.\n Il primo che arriva a zero punti vita o finira' il mana avra' perso.\n");
+    printf("Vi sfiderete in uno scontro magico. Entrambi avete 100Pv e 100Mp.\nIl primo che arriva a zero punti vita o finira' il mana avra' perso.\n");
     printf("Gestite bene le vostre risorse e cercate la migliore strategia. Che vinca il migliore\n\n");
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
     printf("il giocatore che inizia la partita e' pescato in modo casuale.\n\n\n");
@@ -262,9 +262,7 @@ int main()
             }//else
         }//while ripetizione turni
         break; //CASO 1
-
         }//switch final case 0 case 1
-
 
     return 0;
 }
